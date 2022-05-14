@@ -28,6 +28,14 @@ class TestPriceFunction(unittest.TestCase):
         self.assertEqual(8*2*0.95 + 8*1, price([0, 0, 1]))
         self.assertEqual(8*3*0.90 + 8*2, price([0, 1, 1, 1, 2]))
 
+    def test_buy_multiple_set_books(self):
+        self.assertEqual(8*4*0.80 + 8*4*0.80, price([0, 0, 1, 1, 2, 2, 3, 4]))
+        self.assertEqual(8*5*0.75 + 8*4*0.80 + 8*4*0.80, price([0, 0, 0,
+                                                                1, 1, 1,
+                                                                2, 2, 2,
+                                                                3, 3,
+                                                                4, 4]))
+
 
 if __name__ == '__main__':
     unittest.main()
