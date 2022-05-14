@@ -15,7 +15,18 @@ def discount(n_diff):
     return percentage
 
 def price(books: list)-> float:
+    ans = 0
+    book_cnt = len(books)
     result = Counter(books)
-    n_diff = len(result)
+
+    while book_cnt>0:
+        n_diff = 0
+        for ind in result:
+            if result[ind]>0:
+                n_diff += 1
+                result[ind] -= 1
+                book_cnt -= 1
+
+        ans += 8 * n_diff * discount(n_diff)
     
-    return discount(n_diff) * len(books) * 8
+    return ans
