@@ -1,6 +1,6 @@
 from collections import Counter
 
-def discount(n_diff):
+def discount(n_diff: int)->float:
     percentage = 1.0
 
     if   n_diff == 2:
@@ -14,19 +14,25 @@ def discount(n_diff):
         
     return percentage
 
-def price(books: list)-> float:
-    ans = 0
-    book_cnt = len(books)
+def price_of_set(set: list[int]) -> float:
+    return 8 * len(set) * discount(len(set))
+
+def took_out_a_set(books: list[int]) -> tuple[list[int], list[int]]:
+    remain, took_out = [], []
+
     result = Counter(books)
+    for ind in result:
+        if result[ind]>0:
+            result[ind] -= 1
+            took_out.append(ind)
+            remain += [ind] * result[ind]
 
-    while book_cnt>0:
-        n_diff = 0
-        for ind in result:
-            if result[ind]>0:
-                n_diff += 1
-                result[ind] -= 1
-                book_cnt -= 1
+    return remain, took_out
 
-        ans += 8 * n_diff * discount(n_diff)
+def price(books: list[int]) -> float:
+    ans = 0
+    while len(books)>0:
+        books, took_out = took_out_a_set(books)
+        ans += price_of_set(took_out)
     
     return ans
